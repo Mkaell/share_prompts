@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
 	experimental: {
 	  appDir: true,
@@ -11,9 +10,24 @@ const nextConfig = {
 	  config.experiments = {
 		...config.experiments,
 		topLevelAwait: true,
-	  }
-	  return config
-	}
-  }
+	  };
+	  return config;
+	},
+  };
   
-  module.exports = nextConfig
+  module.exports = {
+	...nextConfig,
+	async headers() {
+	  return [
+		{
+		  source: '/favicon.ico',
+		  headers: [
+			{
+			  key: 'Cache-Control',
+			  value: 'public, max-age=86400, must-revalidate',
+			},
+		  ],
+		},
+	  ];
+	},
+  };
